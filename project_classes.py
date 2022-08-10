@@ -40,6 +40,7 @@ class Character:
         self.stats = {}
         self.equip_weapon(weapon)
 
+    # DISPLAY METHODS
     def __repr__(self) -> str:
         return f"{self.name}:" + " " + self.show_health()
 
@@ -52,6 +53,7 @@ class Character:
     def show_health_and_weapon(self) -> str:
         return self.__repr__() + ", " + self.show_weapon()
 
+    # ACTION METHODS
     def equip_weapon(self, weapon: Weapon) -> None:
         self.weapon = weapon
 
@@ -61,12 +63,34 @@ class Character:
         if not other.is_alive():
             other.alive = False
 
+    def flee(self, other: any) -> tuple:
+
+        if self.stats["Speed"] > other.stats["Speed"]:
+            return "Fled combat.", 0
+        else:
+            return "Cannot run away!", 1
+
+    def level_up(self) -> None:
+
+        if self.xp > self.xp_bar:
+            self.xp -= self.xp_bar
+            self.level += 1
+
+        elif self.xp == self.xp_bar:
+            self.xp = 0
+            self.level += 1
+
+    def award_xp(self) -> int:
+        return self.xp_yield
+
+    # CHECK METHODS
     def is_alive(self) -> bool:
         return self.hp > 0
 
-    def is_ready_to_level_up(self) -> tuple:
+    def is_ready_to_level_up(self) -> tuple[bool, str]:
         return self.xp >= self.xp_bar, f"{self.name}: {self.xp}/{self.xp_bar} XP"
 
+    # SET METHODS
     def set_xp_bar(self) -> None:
 
         """
@@ -93,22 +117,4 @@ class Character:
         padding = 5
         self.xp_yield = (self.level + padding) * (self.tier * self.level)
 
-    def award_xp(self) -> int:
-        return self.xp_yield
 
-    def level_up(self) -> None:
-
-        if self.xp > self.xp_bar:
-            self.xp -= self.xp_bar
-            self.level += 1
-
-        elif self.xp == self.xp_bar:
-            self.xp = 0
-            self.level += 1
-
-    def flee(self, other: any) -> tuple:
-
-        if self.stats["Speed"] > other.stats["Speed"]:
-            return "Fled combat.", 0
-        else:
-            return "Cannot run away!", 1

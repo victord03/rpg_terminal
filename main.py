@@ -5,10 +5,11 @@ INPUT_DECO = "\n> "
 DECO = "-" * 45
 
 
+# COMBAT FUNCTION
 def coordinate_combat_phase(
         char: project_classes.Character,
         enemy: project_classes.Character,
-        printing=True) -> project_classes.Character:
+        printing=True) -> tuple[project_classes.Character, int]:
 
     if printing:
         display_battle_start(char, enemy)
@@ -51,15 +52,12 @@ def coordinate_combat_phase(
                     # todo: implement flee success
                     ...
 
-                else:
-                    continue
-
         if not enemy.is_alive():
 
             if printing:
                 print(display_battle_recap(enemy))
 
-            return enemy
+            return char, enemy.award_xp()
 
         # todo: implement AI call here (deciding NPC combat actions)
         enemy.attack(char)
@@ -81,11 +79,12 @@ def coordinate_combat_phase(
             if printing:
                 print(display_battle_recap(char))
 
-            return char
+            return enemy, char.award_xp()
 
         i += 1
 
 
+# PRINTING FUNCTIONS
 def display_combat_options() -> None:
 
     print(
@@ -118,6 +117,7 @@ def display_combatants_health(char: project_classes.Character, opp: project_clas
     print(opp)
 
 
+# VALUE TESTING FUNCTIONS
 def check_xp_values(char: project_classes.Character, number_of_levels: int) -> dict:
 
     dict_of_values = {}
@@ -174,13 +174,9 @@ def check_xp_yield_values(char: project_classes.Character, number_of_levels: int
         char.level += 1
 
 
+# MATH FUNCTION
 def calc_percentage(a, b) -> float:
     return round((a / b) * 100, 2)
-
-
-# not implemented
-def load_game() -> str:
-    return "Loading recent save."
 
 
 def main():
@@ -206,7 +202,7 @@ def main():
     hero = project_classes.Character(hero_name, unarmed)
     hero.hp = 48
     hero.hp_max = 48
-    hero.stats["Speed"] = 5
+    hero.stats["Speed"] = 2
 
     # Enemy
     enemy_name = "Goblin"
@@ -214,21 +210,22 @@ def main():
     goblin.hp = 15
     goblin.hp_max = 15
     goblin.set_xp_yield()
-    goblin.stats["Speed"] = 5
-
-    print("Goblin XP YIELD:", goblin.xp_yield)
+    goblin.stats["Speed"] = 1
 
     hero.equip_weapon(bkh)
     goblin.equip_weapon(rd)
 
-    printing = True
-    xp_yield = coordinate_combat_phase(hero, goblin, printing)
+    winner, xp = coordinate_combat_phase(hero, goblin, printing=False)
 
-    hero.xp += xp_yield
+    winner.xp += 64
 
     check_level_up = False
     if check_level_up:
         print(f"\n{hero.name} is ready to level up ?", hero.is_ready_to_level_up())
+
+        if hero.is_ready_to_level_up():
+            hero.level_up()
+            print(f"\n{hero.name} (LVL {hero.level}, {hero.xp}/{hero.xp_bar} XP)")
 
     # Value testing
     # b = check_xp_values(hero, 60)
@@ -238,6 +235,7 @@ def main():
 
     # print()
     # check_xp_yield_values(hero, 60, b)
+
 
 
 if __name__ == "__main__":
