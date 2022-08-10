@@ -217,9 +217,10 @@ def main():
 
     winner, xp = coordinate_combat_phase(hero, goblin, printing=False)
 
-    winner.xp += 64
+    # cheating just to see the level up
+    winner.xp += 78
 
-    check_level_up = False
+    check_level_up = True
     if check_level_up:
         print(f"\n{hero.name} is ready to level up ?", hero.is_ready_to_level_up())
 
@@ -235,7 +236,6 @@ def main():
 
     # print()
     # check_xp_yield_values(hero, 60, b)
-
 
 
 if __name__ == "__main__":
