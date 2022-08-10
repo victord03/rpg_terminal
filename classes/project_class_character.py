@@ -1,4 +1,4 @@
-from project_class_weapon import Weapon
+from classes.project_class_weapon import Weapon
 
 
 class Character:
@@ -22,9 +22,11 @@ class Character:
 
     stats: dict
 
-    def __init__(self, name: str, weapon: Weapon):
+    def __init__(self, name: str, weapon: Weapon, hp_max: int):
         self.name = name
         self.alive = True
+        self.hp_max = hp_max
+        self.hp = self.hp_max
         self.level = 1
         self.xp = 0
         self.set_xp_bar()
@@ -59,12 +61,12 @@ class Character:
         if not other.is_alive():
             other.alive = False
 
-    def flee(self, other: any) -> tuple:
+    def flee(self, other: any) -> int:
 
         if self.stats["Speed"] > other.stats["Speed"]:
-            return "Fled combat.", 0
+            return 0
         else:
-            return "Cannot run away!", 1
+            return 1
 
     def level_up(self) -> None:
 

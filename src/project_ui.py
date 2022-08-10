@@ -25,6 +25,14 @@ def display_battle_recap(defeated_char: Character) -> str:
     return f"{defeated_char.name} has been defeated!"
 
 
+def display_flee_success() -> str:
+    return "Successfully fled combat."
+
+
+def display_flee_fail() -> str:
+    return "Cannot flee!"
+
+
 def display_xp_awarded(winning_char: Character, defeated_char: Character) -> str:
     return f"{winning_char.name} is awarded {defeated_char.xp_yield} XP."
 

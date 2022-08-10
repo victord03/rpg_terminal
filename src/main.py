@@ -1,7 +1,9 @@
 import project_ui
 from classes.project_class_character import Character
 from classes.project_class_weapon import Weapon
-from utils.project_constants import NEW_LINE, DECO
+from data.weapon_data import rusty_dagger, black_knight_halberd, unarmed
+from data.character_data import goblin, main_char
+from utils.project_constants import DECO
 
 
 def coordinate_combat_phase(
@@ -41,14 +43,13 @@ def coordinate_combat_phase(
 
             case 1:
 
-                text = combat_options[choice](enemy)[0]
-                code = combat_options[choice](enemy)[1]
-
-                print(NEW_LINE + text)
+                code = combat_options[choice](enemy)
 
                 if code == 0:
-                    # todo: implement flee success
-                    ...
+                    print(project_ui.display_flee_success())
+                    return char, 0
+                elif code == 1:
+                    print(project_ui.display_flee_fail())
 
         if not enemy.is_alive():
 
@@ -85,40 +86,24 @@ def coordinate_combat_phase(
 def main():
 
     # Weapons
-    unarmed = Weapon()
-    unarmed.name = "Unarmed"
-    unarmed.weapon_type = "Regular"
-    unarmed.damage = 1
-
-    bkh = Weapon()
-    bkh.name = "Black Knight Halberd"
-    bkh.weapon_type = "Special"
-    bkh.damage = 7
-
-    rd = Weapon()
-    rd.name = "Rusty Dagger"
-    rd.weapon_type = "Regular"
-    rd.damage = 3
+    fist = Weapon(unarmed["name"], unarmed["damage"], unarmed["weapon_type"])
+    bkh = Weapon(black_knight_halberd["name"], black_knight_halberd["damage"], black_knight_halberd["weapon_type"])
+    rd = Weapon(rusty_dagger["name"], rusty_dagger["damage"], rusty_dagger["weapon_type"])
 
     # Hero
     hero_name = "Sire McDoughNat"
-    hero = Character(hero_name, unarmed)
-    hero.hp = 48
-    hero.hp_max = 48
+    hero = Character(hero_name, fist, main_char["hp"])
     hero.stats["Speed"] = 2
 
     # Enemy
-    enemy_name = "Goblin"
-    goblin = Character(enemy_name, unarmed)
-    goblin.hp = 15
-    goblin.hp_max = 15
-    goblin.set_xp_yield()
-    goblin.stats["Speed"] = 1
+    enemy = Character(goblin["name"], fist, goblin["hp"])
+    enemy.set_xp_yield()
+    enemy.stats["Speed"] = 1
 
     hero.equip_weapon(bkh)
-    goblin.equip_weapon(rd)
+    enemy.equip_weapon(rd)
 
-    winner, xp = coordinate_combat_phase(hero, goblin, printing=True)
+    winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
 
     winner.xp += xp
 
@@ -129,7 +114,6 @@ def main():
         if hero.is_ready_to_level_up():
             hero.level_up()
             print(f"\n{hero.name} (LVL {hero.level}, {hero.xp}/{hero.xp_bar} XP)")
-
 
 
     """
