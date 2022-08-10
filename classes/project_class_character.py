@@ -1,11 +1,4 @@
-
-class Weapon:
-    name: str
-    weapon_type: str
-    damage: int
-
-    def __repr__(self) -> str:
-        return f"WEAPON: [{self.name}: {self.weapon_type} CLASS, {self.damage} DMG]"
+from project_class_weapon import Weapon
 
 
 class Character:
@@ -50,6 +43,9 @@ class Character:
     def show_weapon(self) -> str:
         return f"[Weapon: {self.weapon.name}, {self.weapon.damage} DMG]"
 
+    def show_xp(self) -> str:
+        return f"{self.name}: {self.xp}/{self.xp_bar} XP"
+
     def show_health_and_weapon(self) -> str:
         return self.__repr__() + ", " + self.show_weapon()
 
@@ -80,15 +76,12 @@ class Character:
             self.xp = 0
             self.level += 1
 
-    def award_xp(self) -> int:
-        return self.xp_yield
-
     # CHECK METHODS
     def is_alive(self) -> bool:
         return self.hp > 0
 
     def is_ready_to_level_up(self) -> tuple[bool, str]:
-        return self.xp >= self.xp_bar, f"{self.name}: {self.xp}/{self.xp_bar} XP"
+        return self.xp >= self.xp_bar, self.show_xp()
 
     # SET METHODS
     def set_xp_bar(self) -> None:

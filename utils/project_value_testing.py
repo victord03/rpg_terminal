@@ -1,6 +1,3 @@
-import project_classes
-
-
 def check_xp_values(char: project_classes.Character, number_of_levels: int) -> dict:
 
     dict_of_values = {}

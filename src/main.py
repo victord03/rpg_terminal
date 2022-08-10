@@ -1,18 +1,13 @@
-import project_classes
 import project_ui
-import project_value_testing
-import project_math
-
-NEW_LINE = "\n"
-INPUT_DECO = "\n> "
-DECO = "-" * 45
+from classes.project_class_character import Character
+from classes.project_class_weapon import Weapon
+from utils.project_constants import NEW_LINE, DECO
 
 
-# COMBAT FUNCTION
 def coordinate_combat_phase(
-        char: project_classes.Character,
-        enemy: project_classes.Character,
-        printing=True) -> tuple[project_classes.Character, int]:
+        char: Character,
+        enemy: Character,
+        printing=True) -> tuple[Character, int]:
 
     if printing:
         project_ui.display_battle_start(char, enemy)
@@ -60,7 +55,7 @@ def coordinate_combat_phase(
             if printing:
                 print(project_ui.display_battle_recap(enemy))
 
-            return char, enemy.award_xp()
+            return char, enemy.xp_yield
 
         # todo: implement AI call here (deciding NPC combat actions)
         enemy.attack(char)
@@ -82,7 +77,7 @@ def coordinate_combat_phase(
             if printing:
                 print(project_ui.display_battle_recap(char))
 
-            return enemy, char.award_xp()
+            return enemy, char.xp_yield
 
         i += 1
 
@@ -90,31 +85,31 @@ def coordinate_combat_phase(
 def main():
 
     # Weapons
-    unarmed = project_classes.Weapon()
+    unarmed = Weapon()
     unarmed.name = "Unarmed"
     unarmed.weapon_type = "Regular"
     unarmed.damage = 1
 
-    bkh = project_classes.Weapon()
+    bkh = Weapon()
     bkh.name = "Black Knight Halberd"
     bkh.weapon_type = "Special"
     bkh.damage = 7
 
-    rd = project_classes.Weapon()
+    rd = Weapon()
     rd.name = "Rusty Dagger"
     rd.weapon_type = "Regular"
     rd.damage = 3
 
     # Hero
     hero_name = "Sire McDoughNat"
-    hero = project_classes.Character(hero_name, unarmed)
+    hero = Character(hero_name, unarmed)
     hero.hp = 48
     hero.hp_max = 48
     hero.stats["Speed"] = 2
 
     # Enemy
     enemy_name = "Goblin"
-    goblin = project_classes.Character(enemy_name, unarmed)
+    goblin = Character(enemy_name, unarmed)
     goblin.hp = 15
     goblin.hp_max = 15
     goblin.set_xp_yield()
@@ -125,8 +120,7 @@ def main():
 
     winner, xp = coordinate_combat_phase(hero, goblin, printing=True)
 
-    # cheating just to see the level up
-    winner.xp += 78
+    winner.xp += xp
 
     check_level_up = True
     if check_level_up:
@@ -136,6 +130,9 @@ def main():
             hero.level_up()
             print(f"\n{hero.name} (LVL {hero.level}, {hero.xp}/{hero.xp_bar} XP)")
 
+
+
+    """
     # Value testing
     # b = project_value_testing.check_xp_values(hero, 60)
     # project_value_testing.display_xp_values(b)
@@ -144,6 +141,7 @@ def main():
 
     # print()
     # project_value_testing.check_xp_yield_values(hero, 60, b)
+    """
 
 
 if __name__ == "__main__":
