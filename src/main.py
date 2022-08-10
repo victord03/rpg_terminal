@@ -1,4 +1,4 @@
-import project_ui
+from project_ui import display_level_up, display_battle_start, display_combat_options, display_flee_success, display_flee_fail, display_battle_recap, display_combatants_health
 from classes.project_class_character import Character
 from classes.project_class_weapon import Weapon
 from data.weapon_data import rusty_dagger, black_knight_halberd, unarmed
@@ -12,7 +12,7 @@ def coordinate_combat_phase(
         printing=True) -> tuple[Character, int]:
 
     if printing:
-        project_ui.display_battle_start(char, enemy)
+        display_battle_start(char, enemy)
 
     i = 1
     while True:
@@ -26,7 +26,7 @@ def coordinate_combat_phase(
             1: char.flee,
         }
 
-        project_ui.display_combat_options()
+        display_combat_options()
 
         choice = int(input("> "))
 
@@ -46,15 +46,15 @@ def coordinate_combat_phase(
                 code = combat_options[choice](enemy)
 
                 if code == 0:
-                    print(project_ui.display_flee_success())
+                    print(display_flee_success())
                     return char, 0
                 elif code == 1:
-                    print(project_ui.display_flee_fail())
+                    print(display_flee_fail())
 
         if not enemy.is_alive():
 
             if printing:
-                print(project_ui.display_battle_recap(enemy))
+                print(display_battle_recap(enemy))
 
             return char, enemy.xp_yield
 
@@ -69,14 +69,14 @@ def coordinate_combat_phase(
 
             print()
 
-            project_ui.display_combatants_health(char, enemy)
+            display_combatants_health(char, enemy)
 
             print()
 
         if not char.is_alive():
 
             if printing:
-                print(project_ui.display_battle_recap(char))
+                print(display_battle_recap(char))
 
             return enemy, char.xp_yield
 
@@ -94,26 +94,21 @@ def main():
     hero_name = "Sire McDoughNat"
     hero = Character(hero_name, fist, main_char["hp"])
     hero.stats["Speed"] = 2
+    hero.equip_weapon(bkh)
 
     # Enemy
     enemy = Character(goblin["name"], fist, goblin["hp"])
     enemy.set_xp_yield()
     enemy.stats["Speed"] = 1
-
-    hero.equip_weapon(bkh)
     enemy.equip_weapon(rd)
 
     winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
 
     winner.xp += xp
 
-    check_level_up = True
-    if check_level_up:
-        print(f"\n{hero.name} is ready to level up ?", hero.is_ready_to_level_up())
-
-        if hero.is_ready_to_level_up():
-            hero.level_up()
-            print(f"\n{hero.name} (LVL {hero.level}, {hero.xp}/{hero.xp_bar} XP)")
+    if hero.is_ready_to_level_up():
+        hero.level_up()
+        display_level_up(winner)
 
 
     """

@@ -40,3 +40,9 @@ def display_xp_awarded(winning_char: Character, defeated_char: Character) -> str
 def display_combatants_health(char: Character, opp: Character):
     print(char)
     print(opp)
+
+
+def display_level_up(char: Character):
+    print(
+        f"\n{char.name} leveled up to LVL {char.level}! ({char.show_xp()})"
+    )

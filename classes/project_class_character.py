@@ -46,7 +46,7 @@ class Character:
         return f"[Weapon: {self.weapon.name}, {self.weapon.damage} DMG]"
 
     def show_xp(self) -> str:
-        return f"{self.name}: {self.xp}/{self.xp_bar} XP"
+        return f"{self.xp}/{self.xp_bar} XP"
 
     def show_health_and_weapon(self) -> str:
         return self.__repr__() + ", " + self.show_weapon()
@@ -82,8 +82,8 @@ class Character:
     def is_alive(self) -> bool:
         return self.hp > 0
 
-    def is_ready_to_level_up(self) -> tuple[bool, str]:
-        return self.xp >= self.xp_bar, self.show_xp()
+    def is_ready_to_level_up(self) -> bool:
+        return self.xp >= self.xp_bar
 
     # SET METHODS
     def set_xp_bar(self) -> None:
