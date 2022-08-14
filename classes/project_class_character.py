@@ -1,4 +1,5 @@
 from classes.project_class_weapon import Weapon
+import data.weapon_data as wp
 
 
 class Character:
@@ -22,18 +23,39 @@ class Character:
 
     stats: dict
 
-    def __init__(self, name: str, weapon: Weapon, hp_max: int):
+    def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]]):
         self.name = name
+        self.weapon = Weapon(wp.weapons["unarmed"]["pn"], wp.weapons["unarmed"]["damage"])
         self.alive = True
         self.hp_max = hp_max
         self.hp = self.hp_max
         self.level = 1
         self.xp = 0
         self.set_xp_bar()
-        self.xp_yield = 1
         self.tier = 1
+        self.set_xp_yield()
         self.stats = {}
-        self.equip_weapon(weapon)
+
+        for tuple_values in stats:
+            self.stats[tuple_values[0]] = tuple_values[1]
+
+    @classmethod
+    def make_main_hero(cls):
+
+        name = input("\nInsert your character name:\n> ")
+        hp = 48
+        stats = [("Speed", 2)]
+
+        return cls(name, hp, stats)
+
+    @classmethod
+    def make_goblin(cls):
+
+        hp = 15
+        name = "Goblin"
+        stats = [("Speed", 1)]
+
+        return cls(name, hp, stats)
 
     # DISPLAY METHODS
     def __repr__(self) -> str:
@@ -55,19 +77,20 @@ class Character:
     def equip_weapon(self, weapon: Weapon) -> None:
         self.weapon = weapon
 
-    def attack(self, other: any) -> None:
+    def attack(self, other=None) -> None:
         other.hp -= self.weapon.damage
 
         if not other.is_alive():
             other.alive = False
 
-    def flee(self, other: any) -> int:
+    def flee(self, other=None) -> int:
 
         if self.stats["Speed"] > other.stats["Speed"]:
             return 0
         else:
             return 1
 
+    # todo: implement recursively for multiple level-ups
     def level_up(self) -> None:
 
         if self.xp > self.xp_bar:
@@ -87,21 +110,6 @@ class Character:
 
     # SET METHODS
     def set_xp_bar(self) -> None:
-
-        """
-        padding: 8; scale: 7
-
-        Level 1: 63 EXP
-        Level 2: 140 EXP
-        Level 3: 231 EXP
-        Level 4: 336 EXP
-        Level 5: 455 EXP
-        Level 6: 588 EXP
-        Level 7: 735 EXP
-        Level 8: 896 EXP
-        Level 9: 1071 EXP
-        Level 10: 1260 EXP
-        """
 
         padding = 8
         scale = 7

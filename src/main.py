@@ -1,8 +1,7 @@
 from project_ui import display_level_up, display_battle_start, display_combat_options, display_flee_success, display_flee_fail, display_battle_recap, display_combatants_health
 from classes.project_class_character import Character
 from classes.project_class_weapon import Weapon
-from data.weapon_data import rusty_dagger, black_knight_halberd, unarmed
-from data.character_data import goblin, main_char
+from data.weapon_data import weapons as wps
 from utils.project_constants import DECO
 
 
@@ -86,20 +85,16 @@ def coordinate_combat_phase(
 def main():
 
     # Weapons
-    fist = Weapon(unarmed["name"], unarmed["damage"], unarmed["weapon_type"])
-    bkh = Weapon(black_knight_halberd["name"], black_knight_halberd["damage"], black_knight_halberd["weapon_type"])
-    rd = Weapon(rusty_dagger["name"], rusty_dagger["damage"], rusty_dagger["weapon_type"])
+    bkh = Weapon(wps["black_knight_halberd"]["pn"], wps["black_knight_halberd"]["damage"])
+    rd = Weapon(wps["rusty_dagger"]["pn"], wps["rusty_dagger"]["damage"])
+    ss = Weapon(wps["short_sword"]["pn"], wps["short_sword"]["damage"])
 
-    # Hero
-    hero_name = "Sire McDoughNat"
-    hero = Character(hero_name, fist, main_char["hp"])
-    hero.stats["Speed"] = 2
-    hero.equip_weapon(bkh)
+    # Characters
+    hero = Character.make_main_hero()
+    enemy = Character.make_goblin()
 
-    # Enemy
-    enemy = Character(goblin["name"], fist, goblin["hp"])
-    enemy.set_xp_yield()
-    enemy.stats["Speed"] = 1
+    # Methods
+    hero.equip_weapon(ss)
     enemy.equip_weapon(rd)
 
     winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
@@ -109,18 +104,6 @@ def main():
     if hero.is_ready_to_level_up():
         hero.level_up()
         display_level_up(winner)
-
-
-    """
-    # Value testing
-    # b = project_value_testing.check_xp_values(hero, 60)
-    # project_value_testing.display_xp_values(b)
-
-    # hero.level = 1
-
-    # print()
-    # project_value_testing.check_xp_yield_values(hero, 60, b)
-    """
 
 
 if __name__ == "__main__":

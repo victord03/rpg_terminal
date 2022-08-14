@@ -1,19 +1,9 @@
 """This file will hold all weapon data as a local database"""
 
-unarmed = {
-    "name": "Unarmed",
-    "damage": 1,
-    "weapon_type": "Regular",
-}
-
-rusty_dagger = {
-    "name": "Rusty Dagger",
-    "damage": 3,
-    "weapon_type": "Regular",
-}
-
-black_knight_halberd = {
-    "name": "Black Knight Halberd",
-    "damage": 7,
-    "weapon_type": "Special",
+# pn = printable name
+weapons = {
+    "unarmed": {"pn": "Unarmed", "damage": 1},
+    "rusty_dagger": {"pn": "Rusty Dagger", "damage": 2},
+    "black_knight_halberd": {"pn": "Black Knight Halberd", "damage": 7},
+    "short_sword": {"pn": "Short Sword", "damage": 3},
 }
