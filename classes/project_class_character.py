@@ -1,5 +1,5 @@
 from classes.project_class_weapon import Weapon
-import data.weapon_data as wp
+from data.weapon_data import weapons as wps
 
 
 class Character:
@@ -25,7 +25,7 @@ class Character:
 
     def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]]):
         self.name = name
-        self.weapon = Weapon(wp.weapons["unarmed"]["pn"], wp.weapons["unarmed"]["damage"])
+        self.weapon = Weapon(wps["unarmed"]["pn"], wps["unarmed"]["damage"])
         self.alive = True
         self.hp_max = hp_max
         self.hp = self.hp_max

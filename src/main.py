@@ -1,4 +1,4 @@
-from project_ui import display_level_up, display_battle_start, display_combat_options, display_flee_success, display_flee_fail, display_battle_recap, display_combatants_health
+import project_ui as ui
 from classes.project_class_character import Character
 from classes.project_class_weapon import Weapon
 from data.weapon_data import weapons as wps
@@ -11,7 +11,7 @@ def coordinate_combat_phase(
         printing=True) -> tuple[Character, int]:
 
     if printing:
-        display_battle_start(char, enemy)
+        ui.display_battle_start(char, enemy)
 
     i = 1
     while True:
@@ -25,7 +25,7 @@ def coordinate_combat_phase(
             1: char.flee,
         }
 
-        display_combat_options()
+        ui.display_combat_options()
 
         choice = int(input("> "))
 
@@ -45,15 +45,15 @@ def coordinate_combat_phase(
                 code = combat_options[choice](enemy)
 
                 if code == 0:
-                    print(display_flee_success())
+                    print(ui.display_flee_success())
                     return char, 0
                 elif code == 1:
-                    print(display_flee_fail())
+                    print(ui.display_flee_fail())
 
         if not enemy.is_alive():
 
             if printing:
-                print(display_battle_recap(enemy))
+                print(ui.display_battle_recap(enemy))
 
             return char, enemy.xp_yield
 
@@ -68,14 +68,14 @@ def coordinate_combat_phase(
 
             print()
 
-            display_combatants_health(char, enemy)
+            ui.display_combatants_health(char, enemy)
 
             print()
 
         if not char.is_alive():
 
             if printing:
-                print(display_battle_recap(char))
+                print(ui.display_battle_recap(char))
 
             return enemy, char.xp_yield
 
@@ -85,7 +85,7 @@ def coordinate_combat_phase(
 def main():
 
     # Weapons
-    bkh = Weapon(wps["black_knight_halberd"]["pn"], wps["black_knight_halberd"]["damage"])
+    # bkh = Weapon(wps["black_knight_halberd"]["pn"], wps["black_knight_halberd"]["damage"])
     rd = Weapon(wps["rusty_dagger"]["pn"], wps["rusty_dagger"]["damage"])
     ss = Weapon(wps["short_sword"]["pn"], wps["short_sword"]["damage"])
 
@@ -97,13 +97,22 @@ def main():
     hero.equip_weapon(ss)
     enemy.equip_weapon(rd)
 
-    winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
+    print(
+        "\n",
+        hero.show_health_and_weapon(),
+        hero.show_xp(),
+        "\n",
+        enemy.show_health_and_weapon(),
+        enemy.show_xp()
+    )
 
-    winner.xp += xp
+    # winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
+
+    """winner.xp += xp
 
     if hero.is_ready_to_level_up():
         hero.level_up()
-        display_level_up(winner)
+        ui.display_level_up(winner)"""
 
 
 if __name__ == "__main__":
