@@ -7,5 +7,5 @@ class Weapon:
         self.name = name
         self.damage = damage
 
-    def __repr__(self) -> str:
+    def show_self(self) -> str:
         return f"WEAPON: [{self.name}: {self.damage} DMG]"

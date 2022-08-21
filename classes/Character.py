@@ -70,8 +70,8 @@ class Character:
         return cls(name, hp, stats)
 
     # DISPLAY METHODS
-    """def __repr__(self) -> str:
-        return f"{self.name}:" + " " + self.show_health()"""
+    def show_self(self) -> str:
+        return f"{self.name}:" + " " + self.show_health()
 
     def show_health(self) -> str:
         return f"{self.hp}/{self.hp_max} HP"
