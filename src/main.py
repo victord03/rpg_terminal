@@ -108,11 +108,9 @@ def main():
 
     # winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
 
-    """winner.xp += xp
-
-    if hero.is_ready_to_level_up():
-        hero.level_up()
-        ui.display_level_up(winner)"""
+    # hero.xp += 4150
+    # hero.level_up()
+    # ui.display_level_up(hero)
 
 
 if __name__ == "__main__":

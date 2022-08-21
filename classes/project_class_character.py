@@ -42,7 +42,19 @@ class Character:
     @classmethod
     def make_main_hero(cls):
 
-        name = input("\nInsert your character name:\n> ")
+        symbols = ["'", ":", "[", "]", '"', "(", ")", "*", "%", "$", "#", "@", "!", "<", ">", "?", "\\", "/", " "]
+
+        name = "/"
+        a = True
+        while a:
+            for char in symbols:
+                if name.count(char) != 0:
+                    name = input("\nInsert your character name:\n> ")
+                    a = True
+                    break
+                else:
+                    a = False
+
         hp = 48
         stats = [("Speed", 2)]
 
@@ -58,8 +70,8 @@ class Character:
         return cls(name, hp, stats)
 
     # DISPLAY METHODS
-    def __repr__(self) -> str:
-        return f"{self.name}:" + " " + self.show_health()
+    """def __repr__(self) -> str:
+        return f"{self.name}:" + " " + self.show_health()"""
 
     def show_health(self) -> str:
         return f"{self.hp}/{self.hp_max} HP"
@@ -90,16 +102,21 @@ class Character:
         else:
             return 1
 
-    # todo: implement recursively for multiple level-ups
     def level_up(self) -> None:
 
-        if self.xp > self.xp_bar:
-            self.xp -= self.xp_bar
-            self.level += 1
+        print(f"LEVEL: {self.level} XP BAR: {self.xp_bar}")
 
-        elif self.xp == self.xp_bar:
-            self.xp = 0
-            self.level += 1
+        while self.xp >= self.xp_bar:
+
+            if self.xp > self.xp_bar:
+                self.xp -= self.xp_bar
+                self.level += 1
+            elif self.xp == self.xp_bar:
+                self.xp = 0
+                self.level += 1
+
+            self.set_xp_bar()
+            print(f"LEVEL: {self.level} XP BAR: {self.xp_bar}")
 
     # CHECK METHODS
     def is_alive(self) -> bool:
