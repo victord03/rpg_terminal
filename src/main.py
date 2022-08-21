@@ -1,6 +1,6 @@
 import project_ui as ui
-from classes.project_class_character import Character
-from classes.project_class_weapon import Weapon
+from classes.Character import Character
+from classes.Weapon import Weapon
 from data.weapon_data import weapons as wps
 from utils.project_constants import DECO
 

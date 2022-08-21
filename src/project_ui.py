@@ -1,4 +1,4 @@
-from classes.project_class_character import Character
+from classes.Character import Character
 from utils.project_constants import NEW_LINE
 
 

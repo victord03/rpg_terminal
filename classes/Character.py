@@ -1,4 +1,4 @@
-from classes.project_class_weapon import Weapon
+from classes.Weapon import Weapon
 from data.weapon_data import weapons as wps
 
 
