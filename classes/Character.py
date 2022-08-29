@@ -83,7 +83,7 @@ class Character:
         return f"{self.xp}/{self.xp_bar} XP"
 
     def show_health_and_weapon(self) -> str:
-        return self.__repr__() + ", " + self.show_weapon()
+        return self.show_self() + ", " + self.show_weapon()
 
     # ACTION METHODS
     def equip_weapon(self, weapon: Weapon) -> None:
