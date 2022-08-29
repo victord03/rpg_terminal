@@ -68,7 +68,9 @@ def coordinate_combat_phase(
 
             print()
 
-            ui.display_combatants_health(char, enemy)
+            char_disp, enemy_disp = ui.display_combatants_health(char, enemy)
+            print(char_disp)
+            print(enemy_disp)
 
             print()
 
@@ -99,11 +101,11 @@ def main():
 
     print(
         "\n",
-        hero.show_health_and_weapon(),
-        hero.show_xp(),
+        ui.display_char_health_and_weapon(hero),
+        ui.display_char_xp(hero),
         "\n",
-        enemy.show_health_and_weapon(),
-        enemy.show_xp()
+        ui.display_char_health_and_weapon(enemy),
+        ui.display_char_xp(enemy)
     )
 
     # winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
