@@ -46,3 +46,5 @@ def display_level_up(char: Character):
     print(
         f"\n{char.name} leveled up to LVL {char.level}! ({char.show_xp()})"
     )
+
+
