@@ -70,9 +70,6 @@ class Character:
         return cls(name, hp, stats)
 
     # ACTION METHODS
-    def equip_weapon(self, weapon: Weapon) -> None:
-        self.weapon = weapon
-
     def attack(self, other=None) -> None:
         other.hp -= self.weapon.damage
 
@@ -110,6 +107,9 @@ class Character:
         return self.xp >= self.xp_bar
 
     # SET METHODS
+    def set_weapon(self, weapon: Weapon) -> None:
+        self.weapon = weapon
+
     def set_xp_bar(self) -> None:
 
         padding = 8

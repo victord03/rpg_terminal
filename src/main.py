@@ -1,7 +1,7 @@
 import project_ui as ui
 from classes.Character import Character
 from classes.Weapon import Weapon
-from data.weapon_data import weapons as wps
+from data.weapon_data import weapons as wd
 from utils.project_constants import DECO
 
 
@@ -88,16 +88,16 @@ def main():
 
     # Weapons
     # bkh = Weapon(wps["black_knight_halberd"]["pn"], wps["black_knight_halberd"]["damage"])
-    rd = Weapon(wps["rusty_dagger"]["pn"], wps["rusty_dagger"]["damage"])
-    ss = Weapon(wps["short_sword"]["pn"], wps["short_sword"]["damage"])
+    rd = Weapon(wd["rusty_dagger"]["pn"], wd["rusty_dagger"]["damage"])
+    ss = Weapon(wd["short_sword"]["pn"], wd["short_sword"]["damage"])
 
     # Characters
     hero = Character.make_main_hero()
     enemy = Character.make_goblin()
 
     # Methods
-    hero.equip_weapon(ss)
-    enemy.equip_weapon(rd)
+    hero.set_weapon(ss)
+    enemy.set_weapon(rd)
 
     print(
         "\n",
