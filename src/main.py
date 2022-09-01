@@ -1,11 +1,12 @@
 import project_ui as ui
 from classes.Character import Character
 from classes.Weapon import Weapon
+from classes.Map import Map
 from data.weapon_data import weapons as wd
 from utils.project_constants import DECO
 
 
-def coordinate_combat_phase(
+def fight(
         char: Character,
         enemy: Character,
         printing=True) -> tuple[Character, int]:
@@ -99,20 +100,28 @@ def main():
     hero.set_weapon(ss)
     enemy.set_weapon(rd)
 
-    print(
+    """print(
         "\n",
         ui.display_char_health_and_weapon(hero),
         ui.display_char_xp(hero),
         "\n",
         ui.display_char_health_and_weapon(enemy),
         ui.display_char_xp(enemy)
-    )
+    )"""
 
-    # winner, xp = coordinate_combat_phase(hero, enemy, printing=True)
+    # winner, xp = fight(hero, enemy, printing=True)
 
     # hero.xp += 4150
     # hero.level_up()
     # ui.display_level_up(hero)
+
+    new_map = Map()
+
+    for _ in range(4):
+        new_map.add_next_room()
+
+    print(new_map.rooms.items())
+    print(new_map.rooms["room1"].display_info())
 
 
 if __name__ == "__main__":
