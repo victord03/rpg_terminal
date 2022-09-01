@@ -1,5 +1,4 @@
 from classes.Weapon import Weapon
-from data.weapon_data import weapons as wps
 
 
 class Character:
@@ -25,7 +24,7 @@ class Character:
 
     def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]]):
         self.name = name
-        self.weapon = Weapon(wps["unarmed"]["pn"], wps["unarmed"]["damage"])
+        self.weapon = Weapon("Unarmed", 10)
         self.alive = True
         self.hp_max = hp_max
         self.hp = self.hp_max
@@ -70,13 +69,13 @@ class Character:
         return cls(name, hp, stats)
 
     # ACTION METHODS
-    def attack(self, other=None) -> None:
+    def attack(self, other) -> None:
         other.hp -= self.weapon.damage
 
         if not other.is_alive():
             other.alive = False
 
-    def flee(self, other=None) -> int:
+    def flee(self, other) -> int:
 
         if self.stats["Speed"] > other.stats["Speed"]:
             return 0
@@ -120,5 +119,3 @@ class Character:
     def set_xp_yield(self) -> None:
         padding = 5
         self.xp_yield = (self.level + padding) * (self.tier * self.level)
-
-

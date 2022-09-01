@@ -88,7 +88,6 @@ def fight(
 def main():
 
     # Weapons
-    # bkh = Weapon(wps["black_knight_halberd"]["pn"], wps["black_knight_halberd"]["damage"])
     rd = Weapon(wd["rusty_dagger"]["pn"], wd["rusty_dagger"]["damage"])
     ss = Weapon(wd["short_sword"]["pn"], wd["short_sword"]["damage"])
 
