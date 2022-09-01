@@ -1,4 +1,5 @@
 from classes.Weapon import Weapon
+from classes.ArmorSet import ArmorSet
 
 
 class Character:
@@ -12,6 +13,8 @@ class Character:
 
     weapon: Weapon
 
+    armor: ArmorSet
+
     level: int
 
     xp: int
@@ -22,9 +25,33 @@ class Character:
 
     stats: dict
 
-    def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]]):
+    def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]], armor_set: ArmorSet):
+
+        unarmed = {
+            "name": "Unarmed",
+            "damage": {
+                    'slash': 0,
+                    'strike': 50,
+                    'thrust': 0,
+                    },
+            "weapon_type": "Fist",
+            "requirements": {
+                'str': 0,
+                'dex': 0
+            }
+        }
+
         self.name = name
-        self.weapon = Weapon("Unarmed", 10)
+
+        self.weapon = Weapon(
+            name=unarmed["name"],
+            damage=unarmed["damage"],
+            weapon_type=unarmed["weapon_type"],
+            requirements=unarmed["requirements"]
+        )
+
+        self.armor = armor_set
+
         self.alive = True
         self.hp_max = hp_max
         self.hp = self.hp_max
@@ -43,6 +70,63 @@ class Character:
 
         symbols = ["'", ":", "[", "]", '"', "(", ")", "*", "%", "$", "#", "@", "!", "<", ">", "?", "\\", "/", " "]
 
+        knight_set = {
+
+            "pn": "Knight Set",
+
+            "helmet": {
+                "physical": {
+                    "slash": 13,
+                    "strike": 16,
+                    "thrust": 14,
+                },
+                "magical": 8,
+                "fire": 9,
+                "lightning": 5,
+                "price": 0,
+                "weight": 4.2,
+            },
+
+            "body": {
+                "physical": {
+                    "slash": 35,
+                    "strike": 43,
+                    "thrust": 36,
+                },
+                "magical": 22,
+                "fire": 25,
+                "lightning": 13,
+                "price": 0,
+                "weight": 10.9,
+            },
+
+            "gauntlet": {
+                "physical": {
+                    "slash": 16,
+                    "strike": 20,
+                    "thrust": 17,
+                },
+                "magical": 7,
+                "fire": 8,
+                "lightning": 4,
+                "price": 0,
+                "weight": 3.5,
+            },
+
+            "leggings": {
+                "physical": {
+                    "slash": 21,
+                    "strike": 25,
+                    "thrust": 22,
+                },
+                "magical": 13,
+                "fire": 14,
+                "lightning": 8,
+                "price": 0,
+                "weight": 6.4,
+            }
+        }
+
         name = "/"
         a = True
         while a:
@@ -54,23 +138,93 @@ class Character:
                 else:
                     a = False
 
-        hp = 48
+        hp = 500
         stats = [("Speed", 2)]
 
-        return cls(name, hp, stats)
+        armor_set = ArmorSet(knight_set)
+
+        return cls(name, hp, stats, armor_set)
 
     @classmethod
     def make_goblin(cls):
 
-        hp = 15
+        hollow_solder_armor = {
+
+            "pn": "Hollow Soldier Helm",
+
+            "helmet": {
+                "physical": {
+                    "slash": 10,
+                    "strike": 11,
+                    "thrust": 9,
+                },
+                "magical": 6,
+                "fire": 6,
+                "lightning": 4,
+                "price": 0,
+                "weight": 3,
+            },
+
+            "body": {
+                "physical": {
+                    "slash": 26,
+                    "strike": 29,
+                    "thrust": 23,
+                },
+                "magical": 16,
+                "fire": 17,
+                "lightning": 10,
+                "price": 0,
+                "weight": 7.8,
+            },
+
+            "gauntlet": {
+                "physical": {
+                    "slash": 0,
+                    "strike": 0,
+                    "thrust": 0,
+                },
+                "magical": 0,
+                "fire": 0,
+                "lightning": 0,
+                "price": 0,
+                "weight": 0,
+            },
+
+            "leggings": {
+                "physical": {
+                    "slash": 13,
+                    "strike": 14,
+                    "thrust": 11,
+                },
+                "magical": 8,
+                "fire": 8,
+                "lightning": 6,
+                "price": 0,
+                "weight": 1.5,
+            }
+        }
+
+        hp = 500
         name = "Goblin"
         stats = [("Speed", 1)]
 
-        return cls(name, hp, stats)
+        armor_set = ArmorSet(hollow_solder_armor)
+        # armor_set.gauntlet = None
+
+        return cls(name, hp, stats, armor_set)
 
     # ACTION METHODS
+    # todo: to test if correct
     def attack(self, other) -> None:
-        other.hp -= self.weapon.damage
+
+        total_resistances = other.armor.add_all_resistance_values()
+        slash_damage = self.weapon.damage['slash'] - total_resistances['slash']
+        strike_damage = self.weapon.damage['strike'] - total_resistances['strike']
+        thrust_damage = self.weapon.damage['thrust'] - total_resistances['thrust']
+
+        # todo: fix negative values adding health instead of subtracting
+        other.hp -= abs(slash_damage + strike_damage + thrust_damage)
 
         if not other.is_alive():
             other.alive = False
