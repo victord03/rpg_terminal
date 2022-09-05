@@ -215,16 +215,26 @@ class Character:
         return cls(name, hp, stats, armor_set)
 
     # ACTION METHODS
-    # todo: to test if correct
     def attack(self, other) -> None:
 
-        total_resistances = other.armor.add_all_resistance_values()
-        slash_damage = self.weapon.damage['slash'] - total_resistances['slash']
-        strike_damage = self.weapon.damage['strike'] - total_resistances['strike']
-        thrust_damage = self.weapon.damage['thrust'] - total_resistances['thrust']
+        other_armor_total_resistances = other.armor.add_all_resistance_values()
 
-        # todo: fix negative values adding health instead of subtracting
-        other.hp -= abs(slash_damage + strike_damage + thrust_damage)
+        slash_damage = self.weapon.damage['slash'] - other_armor_total_resistances['slash']
+
+        if slash_damage < 0:
+            slash_damage = 0
+
+        strike_damage = self.weapon.damage['strike'] - other_armor_total_resistances['strike']
+
+        if strike_damage < 0:
+            strike_damage = 0
+
+        thrust_damage = self.weapon.damage['thrust'] - other_armor_total_resistances['thrust']
+
+        if thrust_damage < 0:
+            thrust_damage = 0
+
+        other.hp -= slash_damage + strike_damage + thrust_damage
 
         if not other.is_alive():
             other.alive = False

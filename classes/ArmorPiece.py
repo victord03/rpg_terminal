@@ -26,6 +26,24 @@ class APResistances:
         self.fire = fire
         self.lightning = lightning
 
+    def __iter__(self):
+        return iter(self.__dict__.items())
+
+    def show_resistances(self) -> str:
+
+        concat = "\nPHYSICAL:"
+
+        for key, res in self:
+
+            if key == 'physical':
+
+                for inner_key, each in self.physical.items():
+                    concat += f"\n\t{inner_key.upper()} {each}"
+            else:
+                concat += f"\n{key.upper()}: {res}"
+
+        return concat
+
 
 class ArmorPiece:
     resistances: APResistances
@@ -38,6 +56,9 @@ class ArmorPiece:
         )
 
         self.attributes = APAttributes(data_dict["price"], data_dict["weight"])
+
+    def __iter__(self):
+        return self.__dict__.items()
 
     def show_self(self) -> str:
 
@@ -52,5 +73,3 @@ class ArmorPiece:
 
         return f"{physical}{magical}{fire}{lightning}{price}{weight}"
 
-    def self_as_dict(self) -> dict:
-        return self.__dict__

@@ -7,10 +7,10 @@ def display_both_characters(char: Character, opp: Character) -> str:
 
     hnw_1 = f"{NL}{display_char_health_and_weapon(char)}, "
     xp_1 = f"{display_char_xp(char)}. "
-    as_1 = f"Wearing the [{display_armor_set(char)}]"
+    as_1 = f"Wearing the [{display_armor_set_name(char)}]"
     hnw_2 = f"{NL}{NL}{display_char_health_and_weapon(opp)}, "
     xp_2 = f"{display_char_xp(opp)}. "
-    as_2 = f"Wearing the [{display_armor_set(opp)}]"
+    as_2 = f"Wearing the [{display_armor_set_name(opp)}]"
 
     return hnw_1 + xp_1 + as_1 + hnw_2 + xp_2 + as_2
 
@@ -25,12 +25,20 @@ def display_combat_options() -> str:
     return NL + "Next action ?" + "\n0: ATTACK\t1: FLEE"
 
 
+# todo: needs total rework
 def display_hit(char: Character, opp: Character) -> str:
-    return f"{char.name} hits {opp.name} for {char.weapon.show_damage_total()} damage ({char.weapon.name})."
+
+    # todo: need to check for each weapon which damage types are assigned, then compare accordingly with the armor
+    who_hits = f"{char.name} hits {opp.name}"
+    wpn_dmg = f"{char.weapon.show_damage_total()} damage ({char.weapon.name})"
+    # resistances = str(sum([x for key, x in char.armor.add_all_resistance_values().items()]))
+    # agn_armor = resistances
+
+    return who_hits + " for " + wpn_dmg + "."
 
 
 def display_combatants_health(char: Character, opp: Character) -> tuple[str, str]:
-    return display_char(char), display_char(opp)
+    return display_char_name_and_health(char), display_char_name_and_health(opp)
 
 
 # POST-COMBAT DISPLAYS
@@ -57,29 +65,23 @@ def display_level_up(char: Character) -> str:
 
 
 # CLASS DISPLAYS
-def display_char(char: Character) -> str:
-    return f"{char.name}:" + " " + display_char_health(char)
-
-
-def display_char_health(char: Character) -> str:
-    return f"{char.hp}/{char.hp_max} HP"
-
-
-def display_char_weapon(char: Character) -> str:
-    return f"[Weapon: {char.weapon.name}, {char.weapon.damage} DMG]"
+def display_char_name_and_health(char: Character) -> str:
+    return f"{char.name}: " + f"{char.hp}/{char.hp_max} HP"
 
 
 def display_char_health_and_weapon(char: Character) -> str:
-    return display_char(char) + ", " + display_char_weapon(char)
+    char_name_n_hp = display_char_name_and_health(char)
+    comma_space = ", "
+    return char_name_n_hp + comma_space + f"[Weapon: {char.weapon.name} {char.weapon.show_damage_total()} DMG]"
 
 
 def display_char_level_and_hp(char: Character) -> str:
-    return f"{char.name} (LVL {char.level}, {display_char_health(char)})"
+    return f"{char.name} (LVL {char.level}, {display_char_name_and_health(char)})"
 
 
 def display_char_xp(char: Character) -> str:
     return f"{char.xp}/{char.xp_bar} XP"
 
 
-def display_armor_set(char: Character) -> str:
-    return char.armor.show_self_simple()
+def display_armor_set_name(char: Character) -> str:
+    return char.armor.show_armor_name()

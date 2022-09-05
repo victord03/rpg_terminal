@@ -1,4 +1,7 @@
-def check_xp_values(char: project_classes.Character, number_of_levels: int) -> dict:
+from classes.Character import Character
+
+
+def check_xp_values(char: Character, number_of_levels: int) -> dict:
 
     dict_of_values = {}
 
@@ -28,7 +31,7 @@ def display_xp_values(values_dict: dict):
         )
 
 
-def check_xp_yield_values(char: project_classes.Character, number_of_levels: int, level_dict=None):
+def check_xp_yield_values(char: Character, number_of_levels: int, level_dict=None):
 
     for level in range(1, number_of_levels+1):
 

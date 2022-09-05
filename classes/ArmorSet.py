@@ -17,10 +17,24 @@ class ArmorSet:
         self.gauntlet = ArmorPiece(data_dict["gauntlet"])
         self.leggings = ArmorPiece(data_dict["leggings"])
 
-        self.weight = self.helmet.attributes.weight + self.body.attributes.weight
-        self.weight += self.gauntlet.attributes.weight + self.leggings.attributes.weight
+        self.weight = int()
+
+        for key, armor_piece in self:
+            self.weight += armor_piece.attributes.weight
+
+        # self.weight = self.helmet.attributes.weight + self.body.attributes.weight
+        # self.weight += self.gauntlet.attributes.weight + self.leggings.attributes.weight
+
+    def __iter__(self):
+        """Iterates only among the different armor pieces (Removes 'name' and 'weight' attributes)."""
+        dict_armor_pieces = self.__dict__.copy()
+        dict_armor_pieces.pop('name')
+        dict_armor_pieces.pop('weight')
+
+        return iter(dict_armor_pieces.items())
 
     def show_complete_self(self) -> str:
+        """Displays all current armor stats"""
 
         # todo: account for missing pieces
         intro = f"{NL}{self.name} Armor Set"
@@ -31,21 +45,22 @@ class ArmorSet:
 
         return f"{intro}{helmet}{body}{gauntlet}{leggings}"
 
-    def show_self_simple(self) -> str:
+    def show_armor_name(self) -> str:
+        """Returns the name of the armor set."""
         return self.name
 
-    def self_as_dict(self) -> dict:
-        return self.__dict__
-
     def add_all_resistance_values(self) -> dict:
+        """Adds up all resistance values per category, for all armor pieces and returns them into a dict."""
 
-        slash = self.helmet.resistances.physical['slash'] + self.body.resistances.physical['slash']
-        slash += self.gauntlet.resistances.physical['slash'] + self.leggings.resistances.physical['slash']
+        damage_types = {
+            'slash': int(),
+            'strike': int(),
+            'thrust': int()
+        }
 
-        strike = self.helmet.resistances.physical['strike'] + self.body.resistances.physical['strike']
-        strike += self.gauntlet.resistances.physical['strike'] + self.leggings.resistances.physical['strike']
+        for key, armor_piece in self:
 
-        thrust = self.helmet.resistances.physical['thrust'] + self.body.resistances.physical['thrust']
-        thrust += self.gauntlet.resistances.physical['thrust'] + self.leggings.resistances.physical['thrust']
+            for damage_type, value in damage_types.items():
+                damage_types[damage_type] += armor_piece.resistances.physical[damage_type]
 
-        return {'slash': slash, 'strike': strike, 'thrust': thrust}
+        return damage_types
