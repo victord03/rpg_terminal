@@ -30,6 +30,7 @@ class APResistances:
         return iter(self.__dict__.items())
 
     def show_resistances(self) -> str:
+        """Returns a string with the armor resistances per category."""
 
         concat = "\nPHYSICAL:"
 
@@ -60,10 +61,14 @@ class ArmorPiece:
     def __iter__(self):
         return self.__dict__.items()
 
-    def show_self(self) -> str:
+    def show_details(self) -> str:
+        """Returns a string detailing all Resistances and Attribute values set to this instance."""
 
-        # todo: break down the physical resistances into three sections (prevent displaying as a dict)
-        physical = f"{NL}{T}{T}Physical: {self.resistances.physical}"
+        slash = self.resistances.physical['slash']
+        strike = self.resistances.physical['strike']
+        thrust = self.resistances.physical['thrust']
+
+        physical = f"{NL}{T}{T}Physical [Slash: {slash}, Strike: {strike}, Thrust {thrust}]"
         magical = f"{NL}{T}{T}Magical: {self.resistances.magical}"
         fire = f"{NL}{T}{T}Fire: {self.resistances.fire}"
         lightning = f"{NL}{T}{T}Lightning: {self.resistances.lightning}"

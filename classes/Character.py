@@ -3,6 +3,7 @@ from classes.ArmorSet import ArmorSet
 
 
 class Character:
+    """Main character class"""
 
     name: str
 
@@ -67,6 +68,7 @@ class Character:
 
     @classmethod
     def make_main_hero(cls):
+        """Factory classmethod: main hero"""
 
         symbols = ["'", ":", "[", "]", '"', "(", ")", "*", "%", "$", "#", "@", "!", "<", ">", "?", "\\", "/", " "]
 
@@ -147,6 +149,7 @@ class Character:
 
     @classmethod
     def make_goblin(cls):
+        """Factory classmethod: generic goblin"""
 
         hollow_solder_armor = {
 
@@ -216,6 +219,7 @@ class Character:
 
     # ACTION METHODS
     def attack(self, other) -> None:
+        """Attack another Character"""
 
         other_armor_total_resistances = other.armor.add_all_resistance_values()
 
@@ -240,6 +244,7 @@ class Character:
             other.alive = False
 
     def flee(self, other) -> int:
+        """Attempt to flee from current combat"""
 
         if self.stats["Speed"] > other.stats["Speed"]:
             return 0
@@ -247,6 +252,7 @@ class Character:
             return 1
 
     def level_up(self) -> None:
+        """Adjust Character Level and XP Bar according to the current XP value """
 
         print(f"LEVEL: {self.level} XP BAR: {self.xp_bar}")
 
@@ -264,16 +270,20 @@ class Character:
 
     # CHECK METHODS
     def is_alive(self) -> bool:
+        """Check if Character is alive"""
         return self.hp > 0
 
     def is_ready_to_level_up(self) -> bool:
+        """Check if Character is ready to level up"""
         return self.xp >= self.xp_bar
 
     # SET METHODS
     def set_weapon(self, weapon: Weapon) -> None:
+        """Equip weapon to a Character"""
         self.weapon = weapon
 
     def set_xp_bar(self) -> None:
+        """Set the XP Bar according to the Character level attribute. Is automatically called in the level_up method."""
 
         padding = 8
         scale = 7
@@ -281,5 +291,6 @@ class Character:
         self.xp_bar = (self.level + padding) * (self.level * scale)
 
     def set_xp_yield(self) -> None:
+        """Set the xp_yield value according to the Character Tier and Level attributes."""
         padding = 5
         self.xp_yield = (self.level + padding) * (self.tier * self.level)

@@ -2,6 +2,8 @@ from classes.Character import Character
 
 
 def check_xp_values(char: Character, number_of_levels: int) -> dict:
+    """For a given number of levels of a character, returns all values required for each consecutive Character level up.
+    Used for tweaking."""
 
     dict_of_values = {}
 
@@ -24,6 +26,8 @@ def check_xp_values(char: Character, number_of_levels: int) -> dict:
 
 
 def display_xp_values(values_dict: dict):
+    """Given a 'values_dict' which is provided by the 'check_xp_values' debug function, displays all the values stored
+    in the dict."""
 
     for key, value in values_dict.items():
         print(
@@ -31,7 +35,8 @@ def display_xp_values(values_dict: dict):
         )
 
 
-def check_xp_yield_values(char: Character, number_of_levels: int, level_dict=None):
+def check_xp_yield_values(char: Character, number_of_levels: int, level_dict=None) -> None:
+    """For a given number of levels of a character, displays the xp_yield values for all tiers."""
 
     for level in range(1, number_of_levels+1):
 

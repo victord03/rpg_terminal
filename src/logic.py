@@ -6,7 +6,9 @@ from data.weapon_data import weapon_data as wd
 
 
 # todo: remove multiple function exit points
+# todo: module for more than two participants
 def fight(char: Character, enemy: Character):
+    """Handles the combat between two characters"""
 
     print(ui.display_battle_start(char, enemy))
 
@@ -36,7 +38,7 @@ def fight(char: Character, enemy: Character):
 
                 if code == 0:
                     print(ui.display_flee_success())
-                    # todo: function exit point 1
+                    # function exit point 1
                     return char, 0
                 elif code == 1:
                     print(ui.display_flee_fail())
@@ -45,7 +47,7 @@ def fight(char: Character, enemy: Character):
 
             print(ui.display_battle_recap(enemy))
 
-            # todo: function exit point 2
+            # function exit point 2
             return "Not implemented yet"
 
         enemy.attack(char)
@@ -64,13 +66,14 @@ def fight(char: Character, enemy: Character):
 
             print(ui.display_battle_recap(char))
 
-            # todo: function exit point 3
+            # function exit point 3
             return "Not implemented yet"
 
         i += 1
 
 
 def instantiate_all_weapons(weapon_data: dict):
+    """Instantiates all weapons in the weapon_data dictionary."""
 
     weapons_dict = {}
 

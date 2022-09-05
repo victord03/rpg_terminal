@@ -13,6 +13,7 @@ class Room:
         self.number = previous_room + 1
 
     def display_info(self) -> str:
+        """Returns a string to display the current and previous corresponding room numbers."""
         return f"Current room: No{self.number}. Previous room: No{self.previous_room}."
 
 
@@ -49,6 +50,7 @@ class Map:
         self.rooms = {}
 
     def add_next_room(self) -> None:
+        """Add a new room to the Map. The new room index increases incrementally from the last one found."""
 
         if not list(self.rooms.keys()):
             next_room_key = "room" + str(0)

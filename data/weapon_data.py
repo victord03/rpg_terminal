@@ -1,4 +1,4 @@
-"""This file holds all weapon data as a local database"""
+"""This file holds all weapon and armor data, and is used as a local database."""
 
 """
 template: 
