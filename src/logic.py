@@ -72,17 +72,17 @@ def fight(char: Character, enemy: Character):
 
 def instantiate_all_weapons(weapon_data: dict):
 
-    weapons = {}
+    weapons_dict = {}
 
     for key, value in weapon_data.items():
-        weapons[key] = Weapon(
+        weapons_dict[key] = Weapon(
             name=value['pn'],
             damage=value['damage'],
             weapon_type=value['type'],
             requirements=value['requirements']
         )
 
-    return weapons
+    return weapons_dict
 
 
 weapons = instantiate_all_weapons(wd)

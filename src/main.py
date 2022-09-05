@@ -16,9 +16,10 @@ def main():
     hero.set_weapon(weapons['bkgs'])
     enemy.set_weapon(weapons['large_club'])
 
+    # Logic
     lg.fight(hero, enemy)
 
-    # MAP
+    # Map
     # new_map = Map()
 
 
