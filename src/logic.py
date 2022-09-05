@@ -1,3 +1,5 @@
+"""Project logic. Holds all operations that do not belong in classes"""
+
 import project_ui as ui
 from classes.Character import Character
 from classes.Weapon import Weapon
@@ -40,7 +42,8 @@ def fight(char: Character, enemy: Character):
                     print(ui.display_flee_success())
                     # function exit point 1
                     return char, 0
-                elif code == 1:
+                # changed below elif statement to if following pylint advice. Test functionality.
+                if code == 1:
                     print(ui.display_flee_fail())
 
         if not enemy.is_alive():
@@ -79,10 +82,10 @@ def instantiate_all_weapons(weapon_data: dict):
 
     for key, value in weapon_data.items():
         weapons_dict[key] = Weapon(
-            name=value['pn'],
-            damage=value['damage'],
-            weapon_type=value['type'],
-            requirements=value['requirements']
+            name=value["pn"],
+            damage=value["damage"],
+            weapon_type=value["type"],
+            requirements=value["requirements"],
         )
 
     return weapons_dict

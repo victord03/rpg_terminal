@@ -1,7 +1,4 @@
-"""This file holds all weapon and armor data, and is used as a local database."""
-
-"""
-template: 
+"""This file holds all weapon and armor data, and is used as a local database.
 
     "name": {
         "pn": "",
@@ -20,7 +17,6 @@ template:
 
 # pn = printable name
 weapon_data = {
-
     "unarmed": {
         "pn": "Unarmed",
         "type": "Fist",
@@ -34,7 +30,6 @@ weapon_data = {
             "dexterity": 0,
         },
     },
-
     "priscilla_dagger": {
         "pn": "Priscilla's Dagger",
         "type": "Dagger",
@@ -48,7 +43,6 @@ weapon_data = {
             "strength": 20,
         },
     },
-
     "longsword": {
         "pn": "Longsword",
         "type": "Straight Sword",
@@ -62,7 +56,6 @@ weapon_data = {
             "strength": 10,
         },
     },
-
     "bks": {
         "pn": "Black Knight Sword",
         "type": "Greatsword",
@@ -76,7 +69,6 @@ weapon_data = {
             "strength": 18,
         },
     },
-
     "bkgs": {
         "pn": "Black Knight Greatsword",
         "type": "Ultra Greatsword",
@@ -90,7 +82,6 @@ weapon_data = {
             "dexterity": 18,
         },
     },
-
     "painting_guardian_sword": {
         "pn": "Painting Guardian Sword",
         "type": "Curved Sword",
@@ -104,7 +95,6 @@ weapon_data = {
             "dexterity": 20,
         },
     },
-
     "uchi": {
         "pn": "Uchigatana",
         "type": "Katana",
@@ -118,7 +108,6 @@ weapon_data = {
             "dexterity": 14,
         },
     },
-
     "marakumo": {
         "pn": "Marakumo",
         "type": "Curved Greatsword",
@@ -132,7 +121,6 @@ weapon_data = {
             "dexterity": 13,
         },
     },
-
     "battle_axe": {
         "pn": "Battle Axe",
         "type": "Axe",
@@ -146,7 +134,6 @@ weapon_data = {
             "dexterity": 8,
         },
     },
-
     "bkga": {
         "pn": "Black Knight Greataxe",
         "type": "Great axe",
@@ -160,7 +147,6 @@ weapon_data = {
             "dexterity": 18,
         },
     },
-
     "mace": {
         "pn": "Mace",
         "type": "Hammer",
@@ -174,7 +160,6 @@ weapon_data = {
             "dexterity": 0,
         },
     },
-
     "large_club": {
         "pn": "Large Club",
         "type": "Great Hammer",
@@ -188,7 +173,6 @@ weapon_data = {
             "dexterity": 0,
         },
     },
-
     "dark_hand": {
         "pn": "Dark Hand",
         "type": "Fist",
@@ -202,7 +186,6 @@ weapon_data = {
             "dexterity": 0,
         },
     },
-
     "silver_knight_spear": {
         "pn": "Silver Knight Spear",
         "type": "Spear",
@@ -216,7 +199,6 @@ weapon_data = {
             "dexterity": 22,
         },
     },
-
     "bkh": {
         "pn": "Black Knight Halberd",
         "type": "Halberd",

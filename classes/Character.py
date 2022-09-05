@@ -3,7 +3,7 @@ from classes.ArmorSet import ArmorSet
 
 
 class Character:
-    """Main character class"""
+    """Main character class."""
 
     name: str
 
@@ -26,20 +26,19 @@ class Character:
 
     stats: dict
 
-    def __init__(self, name: str, hp_max: int, stats: list[tuple[str, int]], armor_set: ArmorSet):
+    def __init__(
+        self, name: str, hp_max: int, stats: list[tuple[str, int]], armor_set: ArmorSet
+    ):
 
         unarmed = {
             "name": "Unarmed",
             "damage": {
-                    'slash': 0,
-                    'strike': 50,
-                    'thrust': 0,
-                    },
+                "slash": 0,
+                "strike": 50,
+                "thrust": 0,
+            },
             "weapon_type": "Fist",
-            "requirements": {
-                'str': 0,
-                'dex': 0
-            }
+            "requirements": {"str": 0, "dex": 0},
         }
 
         self.name = name
@@ -48,7 +47,7 @@ class Character:
             name=unarmed["name"],
             damage=unarmed["damage"],
             weapon_type=unarmed["weapon_type"],
-            requirements=unarmed["requirements"]
+            requirements=unarmed["requirements"],
         )
 
         self.armor = armor_set
@@ -68,14 +67,32 @@ class Character:
 
     @classmethod
     def make_main_hero(cls):
-        """Factory classmethod: main hero"""
+        """Factory classmethod: main hero."""
 
-        symbols = ["'", ":", "[", "]", '"', "(", ")", "*", "%", "$", "#", "@", "!", "<", ">", "?", "\\", "/", " "]
+        symbols = [
+            "'",
+            ":",
+            "[",
+            "]",
+            '"',
+            "(",
+            ")",
+            "*",
+            "%",
+            "$",
+            "#",
+            "@",
+            "!",
+            "<",
+            ">",
+            "?",
+            "\\",
+            "/",
+            " ",
+        ]
 
         knight_set = {
-
             "pn": "Knight Set",
-
             "helmet": {
                 "physical": {
                     "slash": 13,
@@ -88,7 +105,6 @@ class Character:
                 "price": 0,
                 "weight": 4.2,
             },
-
             "body": {
                 "physical": {
                     "slash": 35,
@@ -101,7 +117,6 @@ class Character:
                 "price": 0,
                 "weight": 10.9,
             },
-
             "gauntlet": {
                 "physical": {
                     "slash": 16,
@@ -114,7 +129,6 @@ class Character:
                 "price": 0,
                 "weight": 3.5,
             },
-
             "leggings": {
                 "physical": {
                     "slash": 21,
@@ -126,7 +140,7 @@ class Character:
                 "lightning": 8,
                 "price": 0,
                 "weight": 6.4,
-            }
+            },
         }
 
         name = "/"
@@ -149,12 +163,10 @@ class Character:
 
     @classmethod
     def make_goblin(cls):
-        """Factory classmethod: generic goblin"""
+        """Factory classmethod: generic goblin."""
 
         hollow_solder_armor = {
-
             "pn": "Hollow Soldier Helm",
-
             "helmet": {
                 "physical": {
                     "slash": 10,
@@ -167,7 +179,6 @@ class Character:
                 "price": 0,
                 "weight": 3,
             },
-
             "body": {
                 "physical": {
                     "slash": 26,
@@ -180,7 +191,6 @@ class Character:
                 "price": 0,
                 "weight": 7.8,
             },
-
             "gauntlet": {
                 "physical": {
                     "slash": 0,
@@ -193,7 +203,6 @@ class Character:
                 "price": 0,
                 "weight": 0,
             },
-
             "leggings": {
                 "physical": {
                     "slash": 13,
@@ -205,7 +214,7 @@ class Character:
                 "lightning": 6,
                 "price": 0,
                 "weight": 1.5,
-            }
+            },
         }
 
         hp = 500
@@ -219,21 +228,27 @@ class Character:
 
     # ACTION METHODS
     def attack(self, other) -> None:
-        """Attack another Character"""
+        """Attack another Character."""
 
         other_armor_total_resistances = other.armor.add_all_resistance_values()
 
-        slash_damage = self.weapon.damage['slash'] - other_armor_total_resistances['slash']
+        slash_damage = (
+            self.weapon.damage["slash"] - other_armor_total_resistances["slash"]
+        )
 
         if slash_damage < 0:
             slash_damage = 0
 
-        strike_damage = self.weapon.damage['strike'] - other_armor_total_resistances['strike']
+        strike_damage = (
+            self.weapon.damage["strike"] - other_armor_total_resistances["strike"]
+        )
 
         if strike_damage < 0:
             strike_damage = 0
 
-        thrust_damage = self.weapon.damage['thrust'] - other_armor_total_resistances['thrust']
+        thrust_damage = (
+            self.weapon.damage["thrust"] - other_armor_total_resistances["thrust"]
+        )
 
         if thrust_damage < 0:
             thrust_damage = 0
@@ -244,7 +259,7 @@ class Character:
             other.alive = False
 
     def flee(self, other) -> int:
-        """Attempt to flee from current combat"""
+        """Attempt to flee from current combat."""
 
         if self.stats["Speed"] > other.stats["Speed"]:
             return 0
@@ -252,7 +267,7 @@ class Character:
             return 1
 
     def level_up(self) -> None:
-        """Adjust Character Level and XP Bar according to the current XP value """
+        """Adjust Character Level and XP Bar according to the current XP value."""
 
         print(f"LEVEL: {self.level} XP BAR: {self.xp_bar}")
 
@@ -270,20 +285,21 @@ class Character:
 
     # CHECK METHODS
     def is_alive(self) -> bool:
-        """Check if Character is alive"""
+        """Check if Character is alive."""
         return self.hp > 0
 
     def is_ready_to_level_up(self) -> bool:
-        """Check if Character is ready to level up"""
+        """Check if Character is ready to level up."""
         return self.xp >= self.xp_bar
 
     # SET METHODS
     def set_weapon(self, weapon: Weapon) -> None:
-        """Equip weapon to a Character"""
+        """Equip weapon to a Character."""
         self.weapon = weapon
 
     def set_xp_bar(self) -> None:
-        """Set the XP Bar according to the Character level attribute. Is automatically called in the level_up method."""
+        """Set the XP Bar according to the Character level attribute.
+        Is automatically called in the level_up method."""
 
         padding = 8
         scale = 7
@@ -291,6 +307,7 @@ class Character:
         self.xp_bar = (self.level + padding) * (self.level * scale)
 
     def set_xp_yield(self) -> None:
-        """Set the xp_yield value according to the Character Tier and Level attributes."""
+        """Set the xp_yield value according to the Character Tier
+        and Level attributes."""
         padding = 5
         self.xp_yield = (self.level + padding) * (self.tier * self.level)

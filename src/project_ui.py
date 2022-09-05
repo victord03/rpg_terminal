@@ -1,3 +1,5 @@
+"""Project UI file. Holds all display methods."""
+
 from classes.Character import Character
 from classes.ArmorSet import ArmorSet
 from utils.constants import NEW_LINE as NL, NLNLT
@@ -19,8 +21,11 @@ def display_both_characters(char: Character, opp: Character) -> str:
 
 # PRE-COMBAT DISPLAYS
 def display_battle_start(char: Character, opp: Character) -> str:
-    """Returns a string with the battle start recap message including Characters, hp and levels of fighters."""
-    return NL + f"FIGHT BREAKOUT: {display_char_level_and_hp(char)}" + f" VS {display_char_level_and_hp(opp)}" + NL
+    """Returns a string with the battle start recap message including Characters,
+    hp and levels of fighters."""
+    char_1 = f"{display_char_level_and_hp(char)}"
+    opp_1 = f"{display_char_level_and_hp(opp)}"
+    return NL + f"FIGHT BREAKOUT: {char_1}" + f" VS {opp_1}" + NL
 
 
 # IN-COMBAT DISPLAYS
@@ -31,9 +36,9 @@ def display_combat_options() -> str:
 
 # todo: needs total rework
 def display_hit(char: Character, opp: Character) -> str:
-    """Returns a string to display """
-
-    # todo: need to check for each weapon which damage types are assigned, then compare accordingly with the armor
+    """Returns a string to display"""
+    # todo: need to check for each weapon which damage types are assigned,
+    # todo: then compare accordingly with the armor
     who_hits = f"{char.name} hits {opp.name}"
     wpn_dmg = f"{char.weapon.show_damage_total()} damage ({char.weapon.name})"
 
@@ -67,12 +72,14 @@ def display_flee_fail() -> str:
 
 # XP & LEVEL UP DISPLAYS
 def display_xp_awarded(winning_char: Character, defeated_char: Character) -> str:
-    """Returns a string with the Character name and the xp points won for defeating the given opponent."""
+    """Returns a string with the Character name and the
+    xp points won for defeating the given opponent."""
     return f"{winning_char.name} is awarded {defeated_char.xp_yield} XP."
 
 
 def display_level_up(char: Character) -> str:
-    """Returns a string to recap the level up. Contains the character name, the new level and the new XP value."""
+    """Returns a string to recap the level up. Contains the
+    character name, the new level and the new XP value."""
     return f"\n{char.name} leveled up to LVL {char.level}! ({display_char_xp(char)})"
 
 
@@ -83,10 +90,14 @@ def display_char_name_and_health(char: Character) -> str:
 
 
 def display_char_health_and_weapon(char: Character) -> str:
-    """Returns a string to display the character name and their currently equipped weapon's basic stats."""
+    """Returns a string to display the character name and their
+    currently equipped weapon's basic stats."""
+
     char_name_n_hp = display_char_name_and_health(char)
     comma_space = ", "
-    return char_name_n_hp + comma_space + f"[Weapon: {char.weapon.name} {char.weapon.show_damage_total()} DMG]"
+    weapon = f"[Weapon: {char.weapon.name} {char.weapon.show_damage_total()} DMG]"
+
+    return char_name_n_hp + comma_space + weapon
 
 
 def display_char_level_and_hp(char: Character) -> str:

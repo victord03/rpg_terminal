@@ -1,4 +1,3 @@
-
 class Weapon:
     name: str
     weapon_type: str
@@ -9,9 +8,9 @@ class Weapon:
         # todo: weapons can currently only inflict physical damage.
         self.name = name
         self.damage = {
-            'slash': damage['slash'],
-            'strike': damage['strike'],
-            'thrust': damage['thrust']
+            "slash": damage["slash"],
+            "strike": damage["strike"],
+            "thrust": damage["thrust"],
         }
         self.weapon_type = weapon_type
         self.requirements = requirements
@@ -23,9 +22,12 @@ class Weapon:
         weapon_type = f"TYPE: {self.weapon_type}"
         req_str = f"REQ STR: {self.requirements['str']}"
         req_dex = f"REQ DEX: {self.requirements['dex']}"
-        return f"WEAPON ({name} [DAMAGE: {damage}, {weapon_type}, {req_str}, {req_dex}])"
+        return (
+            f"WEAPON ({name} [DAMAGE: {damage}, {weapon_type}, {req_str}, {req_dex}])"
+        )
 
     def show_damage_total(self) -> str:
-        """Returns a string to display this weapon's total damage, across all physical categories"""
-        damage = self.damage['slash'] + self.damage['strike'] + self.damage['thrust']
+        """Returns a string to display this weapon's total damage,
+        across all physical categories"""
+        damage = self.damage["slash"] + self.damage["strike"] + self.damage["thrust"]
         return str(damage)

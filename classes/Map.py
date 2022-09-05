@@ -1,5 +1,3 @@
-
-
 class Room:
     number: int
     previous_room: int
