@@ -62,6 +62,7 @@ class ArmorPiece:
         self.attributes = APAttributes(data_dict["price"], data_dict["weight"])
 
     def __iter__(self):
+        # todo: forgot to wrap iter()
         return self.__dict__.items()
 
     def show_details(self) -> str:

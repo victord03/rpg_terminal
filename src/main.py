@@ -5,8 +5,6 @@ from classes.Character import Character
 from classes.Map import Map
 
 
-# check remote branch origin/restructure/classmethod
-# (still exists but cannot be found on github.com)
 def main():
     """Runs the project"""
 
