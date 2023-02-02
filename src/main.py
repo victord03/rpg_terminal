@@ -19,6 +19,7 @@ def main():
     enemy.set_weapon(weapons["large_club"])
 
     # Logic
+    # todo: error displaying '120 damage' for the weapon 'large_club'. investigate.
     lg.fight(hero, enemy)
 
     # Map
